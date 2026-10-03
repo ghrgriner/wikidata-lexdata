@@ -1,0 +1,9 @@
+# Extract the item and label for all languages used on lexical entries
+SELECT ?item ?itemLabel WHERE {
+  { SELECT distinct ?item WHERE {
+       ?l a ontolex:LexicalEntry;
+          dct:language ?item .
+      }
+  }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}

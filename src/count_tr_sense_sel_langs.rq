@@ -1,0 +1,54 @@
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX ontolex: <http://www.w3.org/ns/lemon/ontolex#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+
+SELECT ?lang ?targ
+       (count(*) as ?nSense)
+       (sum(?meetsIFTS) as ?nsIFTS)
+       (sum(?meetsTransToL2) as ?nsTransToL2)
+       (sum(?meetsTrans2ToL2) as ?nsTrans2ToL2)
+       (sum(?meetsDemonym) as ?nsDemonym)
+       (sum(?meetsPredicateFor) as ?nsPredicateFor)
+       (sum(?meetsAny) as ?nsAny)
+       (sum(?meetsTransFromL2) as ?nsTransFromL2)
+       (sum(?meetsTransOnlyFromL2) as ?nsTransOnlyFromL2)
+WHERE {
+
+  VALUES (?lang ?targ) {
+    (wd:Q1860 wd:Q5146) # (ru en) (en ru)
+  }
+
+  ?sense a ontolex:LexicalSense ;
+         ^ontolex:sense [ dct:language ?lang ] .
+
+  BIND(IF(EXISTS {
+       ?sense  wdt:P5137 / ^wdt:P5137 / ^ontolex:sense / dct:language ?targ .
+                 }, 1, 0) AS ?meetsIFTS)
+
+  BIND(IF(EXISTS {
+       ?sense  wdt:P5972 / ^ontolex:sense / dct:language ?targ .
+                 }, 1, 0) AS ?meetsTransToL2)
+
+  BIND(IF(EXISTS {
+       ?sense  wdt:P5972 / wdt:P5972? / ^ontolex:sense / dct:language ?targ .
+                 }, 1, 0) AS ?meetsTrans2ToL2)
+
+  BIND(IF(EXISTS {
+       ?sense  ^wdt:P5972 / ^ontolex:sense / dct:language ?targ .
+                 }, 1, 0) AS ?meetsTransFromL2)
+  BIND(IF(?meetsTransFromL2 && !?meetsTransToL2, 1, 0) AS ?meetsTransOnlyFromL2)
+
+  BIND(IF(EXISTS {
+       ?sense  wdt:P6271 / ^wdt:P6271 / ^ontolex:sense / dct:language ?targ .
+                 }, 1, 0) AS ?meetsDemonym)
+
+  BIND(IF(EXISTS {
+       ?sense  wdt:P9970 / ^wdt:P9970 / ^ontolex:sense / dct:language ?targ .
+                 }, 1, 0) AS ?meetsPredicateFor)
+
+  BIND(IF( ?meetsIFTS = 1      || ?meetsTransToL2 = 1 || ?meetsTrans2ToL2 ||
+           ?meetsDemonym = 1   || ?meetsPredicateFor = 1, 1, 0) AS ?meetsAny)
+
+}
+GROUP BY ?lang ?targ
