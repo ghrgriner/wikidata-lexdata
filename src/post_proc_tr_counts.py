@@ -92,6 +92,7 @@ print(df_out['nsAnyTrunc10k'].describe())
 
 out_vars = (['langLabel', 'targLabel', 'langRank', 'targRank'] + init_vars 
             + ['nsAnyTrunc10k'])
+df_out = df_out.sort_values(['langLabel','targLabel'])
 df_out[out_vars].to_csv(OUTPUT_FILE, sep='\t',
                         quoting=csv.QUOTE_NONE, index=None)
 
