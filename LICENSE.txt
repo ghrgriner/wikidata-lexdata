@@ -14,6 +14,7 @@ Service at <query.wikidata.org>. The data we used was made available under
 CC0 (https://creativecommons.org/publicdomain/zero/1.0/). See more information
 in the Terms of Use <https://foundation.wikimedia.org/wiki/Special:MyLanguage/Terms_of_Use>
 and at <https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/Copyright>.
+The extracted file is in the repository in the `input/lang_labels.tsv` file.
 
 ------------------------------------------------------------------------------
 License information for *.tsv files in this repository
