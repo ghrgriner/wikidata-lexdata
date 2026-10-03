@@ -28,12 +28,12 @@ other example queries embedded in wiki pages (see link to wiki below).
    lexicographical data dump into our own database, and the language
    labels aren't present in this dump.
 
-2. [tr\_sense\_counts\_top\_langs.rq](tr\_sense\_counts\_top\_langs.rq):
+2. [tr\_sense\_counts\_top\_langs.rq](src/tr\_sense\_counts\_top\_langs.rq):
    Counts senses with at least one translation for the top 50 languages.
    The results from this query are presented on the wiki. This query will
    timeout if run on the WDQS.
 
-3. [tr\_sense\_counts\_sel\_langs.rq](tr\_sense\_counts\_sel\_langs.rq):
+3. [tr\_sense\_counts\_sel\_langs.rq](src/tr\_sense\_counts\_sel\_langs.rq):
    This is the same query as above, but replacing the top 50 languages with
    one source language and one translation target language. We have successfully
    run this query on the WDQS.
