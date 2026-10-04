@@ -17,6 +17,7 @@ import pandas as pd
 #-----------------------------------------------------------------------------
 INPUT_FILE = '../output/count_tr_sense_top_langs.tsv'
 INPUT_LANG_LABEL_FILE = '../input/lang_labels.tsv'
+TRUNC_MD_FILE = '../output/tr_trunc_main.md'
 OUTPUT_FILE = '../output/count_tr_sense_top_langs_pp.tsv'
 
 #-----------------------------------------------------------------------------
@@ -84,9 +85,17 @@ print()
 print(df_out['nsAny'].describe())
 
 df_out['nsAnyTrunc10k'] = df_out.nsAny.map(lambda x: x if x < 10000 else 10000)
+
+df_trunc=df_out[df_out.nsAny > 10000][['langLabel','targLabel','nSense','nsAny',
+               'nsAnyTrunc10k']].sort_values(by='nsAny', ascending=False)
 print()
-print(df_out[df_out.nsAny > 10000][['langLabel','targLabel','nSense','nsAny',
-                                   'nsAnyTrunc10k']])
+print(df_trunc)
+df_trunc['md_row'] = ('| '  + df_trunc.langLabel + ' | ' + df_trunc.targLabel
+                   + ' | ' + df_trunc.nsAny.map(lambda x: str(round(x / 1000)))
+                   + ' |')
+df_trunc['md_row'].to_csv(TRUNC_MD_FILE, sep='\t', quoting=csv.QUOTE_NONE,
+                          index=False)
+
 print()
 print(df_out['nsAnyTrunc10k'].describe())
 
