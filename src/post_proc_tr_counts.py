@@ -15,9 +15,18 @@ import pandas as pd
 #-----------------------------------------------------------------------------
 # Parameters
 #-----------------------------------------------------------------------------
-INPUT_FILE = '../output/count_tr_sense_top_langs.tsv'
-TRUNC_MD_FILE = '../output/tr_trunc_main.md'
-OUTPUT_FILE = '../output/count_tr_sense_top_langs_pp.tsv'
+MAIN_INPUT_FILE = '../output/count_tr_sense_top_langs.tsv'
+MAIN_TRUNC_MD_FILE = '../output/tr_trunc_main.md'
+MAIN_OUTPUT_FILE = '../output/count_tr_sense_top_langs_pp.tsv'
+
+# sensitivity analysis allowing synonyms in the path
+SYN_INPUT_FILE = '../output/count_tr_synsense_top_langs.tsv'
+SYN_OUTPUT_FILE = '../output/count_tr_synsense_top_langs_pp.tsv'
+
+# sensitivity analysis counting gloss senses as translations
+GL_INPUT_FILE = '../output/count_tr_glsense_top_langs.tsv'
+GL_TRUNC_MD_FILE = '../output/tr_trunc_gl.md'
+GL_OUTPUT_FILE = '../output/count_tr_glsense_top_langs_pp.tsv'
 
 #-----------------------------------------------------------------------------
 # Constants
@@ -57,7 +66,7 @@ def post_proc_tr_counts(input_file, output_file,
     dfl['itemUniqLabel'] = dfl.apply(make_uniq_label, axis=1)
     if dfl.dup.any():
         print('Duplicate language labels had item name added.')
-        print(f'(These languages might not be used in {INPUT_FILE}.)')
+        print(f'(These languages might not be used in {input_file}.)')
         print(dfl[dfl.dup][['item','itemLabel','itemUniqLabel']])
 
     # put the resource IRI in brackets to match what is in `df`
@@ -118,4 +127,8 @@ def post_proc_tr_counts(input_file, output_file,
 #-----------------------------------------------------------------------------
 # Main entry point
 #-----------------------------------------------------------------------------
-post_proc_tr_counts(INPUT_FILE, OUTPUT_FILE, trunc_md_file=TRUNC_MD_FILE)
+post_proc_tr_counts(MAIN_INPUT_FILE, MAIN_OUTPUT_FILE,
+                    trunc_md_file=MAIN_TRUNC_MD_FILE)
+post_proc_tr_counts(SYN_INPUT_FILE, SYN_OUTPUT_FILE)
+post_proc_tr_counts(GL_INPUT_FILE, GL_OUTPUT_FILE,
+                    trunc_md_file=GL_TRUNC_MD_FILE)
