@@ -46,6 +46,14 @@ def make_uniq_label(row):
     else:
         return row['itemLabel']
 
+def print_rev_trans_stats(df_):
+    if 'nsTransOnlyFromL2' not in df_:
+        print('FromL2 not found!')
+        return
+    dfsen = df_[['langLabel','targLabel','nsTransToL2','nsTrans2ToL2','nsTransOnlyFromL2']].copy()
+    print()
+    print(dfsen.nlargest(5, 'nsTransOnlyFromL2'))
+
 def post_proc_tr_counts(input_file, output_file,
                         trunc_md_file=None):
     df = pd.read_csv(input_file, sep='\t', quoting=csv.QUOTE_NONE)
@@ -78,6 +86,8 @@ def post_proc_tr_counts(input_file, output_file,
     df = df.merge(dfl[['bitem','itemUniqLabel']],
                   left_on='targ', right_on='bitem').rename(
             columns = {'itemUniqLabel': 'targLabel'}).drop(['bitem'], axis=1)
+
+    print_rev_trans_stats(df_=df)
 
     df_order = df[ df.lang == df.targ ].copy()
     df_order = df_order.sort_values(
