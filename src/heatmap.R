@@ -23,9 +23,9 @@ df <- df %>%
   mutate(targFact = fct_reorder(targLabel, targRank))
 
 # TODO: generate programmatically here or in the .py program
-cap_line1 <- 'Translation counts over 10,000 are truncated at 10,000. Untruncated counts (000s): Bokmål -> Nynorsk: 33, Nynorsk -> Bokmål: 32, English -> Italian: 12, Italian -> English: 12, English -> French: 11, Bokmål -> English: 11'
+cap_line1 <- 'Translation counts over 10,000 are truncated at 10,000 for 6 cells. See table in text for details.'
 cap_line2 <- paste0('Translations are senses mapping to same item using ',
-                    '"item for this sense" (P5137), "demonym" (P6271), or ',
+                    '"item for this sense" (P5137), "demonym of" (P6271), or ',
                     '"predicate for" (P9970) or that can be reached using the ',
                     '"translation" property (P5972) in a path of length 1 or ',
                     '2.')
