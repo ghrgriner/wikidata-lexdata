@@ -47,7 +47,7 @@ WHERE {
        ?sense  wdt:P9970 / ^wdt:P9970 / ^ontolex:sense / dct:language ?targ .
                  }, 1, 0) AS ?meetsPredicateFor)
 
-  BIND(IF( ?meetsIFTS = 1      || ?meetsTransToL2 = 1 || ?meetsTrans2ToL2 ||
+  BIND(IF( ?meetsIFTS = 1      || ?meetsTransToL2 = 1 || ?meetsTrans2ToL2 = 1 ||
            ?meetsDemonym = 1   || ?meetsPredicateFor = 1, 1, 0) AS ?meetsAny)
 
 }
