@@ -1,5 +1,4 @@
-'''
-Compare sensitivity analysis allowing 'synonym' paths with main analysis.
+'''Compare sensitivity analysis allowing 'synonym' paths with main analysis.
 '''
 
 import csv

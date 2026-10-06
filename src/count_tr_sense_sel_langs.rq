@@ -1,3 +1,12 @@
+#-----------------------------------------------------------------------------
+# This is like the main analysis (`count_tr_sense_top_langs.rq`) but only
+# a single source language and target language are selected. It's used for
+# testing and to provide an example query that will run on the Wikidata
+# Query Service, as the full main analysis will time out.
+#
+# See the main analysis file for optimization and organization comments.
+#-----------------------------------------------------------------------------
+
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX ontolex: <http://www.w3.org/ns/lemon/ontolex#>
 PREFIX dct: <http://purl.org/dc/terms/>
@@ -16,7 +25,7 @@ SELECT ?lang ?targ
 WHERE {
 
   VALUES (?lang ?targ) {
-    (wd:Q1860 wd:Q5146) # (ru en) (en ru)
+    (wd:Q1860 wd:Q5146) # (en ru)
   }
 
   ?sense a ontolex:LexicalSense ;

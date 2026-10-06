@@ -1,3 +1,26 @@
+#-----------------------------------------------------------------------------
+# Create counts for main analysis and sensitivity analysis that considers
+# the translation path from the target language
+#
+# It probably would make more sense organizationally to (1) have the
+# sensitivity analysis in the gloss sensitivity analysis file, so that
+# this file is only the main analysis, or (2) put them all in one file.
+# I might do one of these options if I rerun.
+#
+# Optimization comments:
+# 1. Could add a filter ?lang != ?targ. I thought the rows with
+#    ?lang = ?targ might be useful for info or debugging but I never look
+#    at them. I'll probably do this if I ever rerun the counts.
+# 2. Could add a filter at the end to delete the rows where the indicators
+#    are always 0. But then ?nSense can't be obtained from count(*). If I
+#    move calculation of ?nSense to the first subquery, I still lose the
+#    combinations where no records are kept. I could enclose the existing
+#    query in OPTIONAL and then join it with the desired 2500
+#    combinations, but this requires repeating the subqueries, and I
+#    prefer to leave the code simpler. Testing suggested only a ~10% speed
+#    improvement and memory use reduction.
+#-----------------------------------------------------------------------------
+
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX ontolex: <http://www.w3.org/ns/lemon/ontolex#>
 PREFIX dct: <http://purl.org/dc/terms/>
